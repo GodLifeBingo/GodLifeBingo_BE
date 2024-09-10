@@ -13,12 +13,11 @@ import lombok.*;
 @Entity
 public class Cell extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int currentProgress;
-    private int row;
-    private int col;
+    private int r;
+    private int c;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bingo_id")

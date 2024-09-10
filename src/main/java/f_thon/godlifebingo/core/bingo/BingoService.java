@@ -1,11 +1,15 @@
 package f_thon.godlifebingo.core.bingo;
 
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
+import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
+import f_thon.godlifebingo.core.bingo.dto.BingoResponse;
 import f_thon.godlifebingo.core.bingo.dto.CellRequest;
+import f_thon.godlifebingo.core.bingo.dto.CellResponse;
 import f_thon.godlifebingo.core.cell.Cell;
 import f_thon.godlifebingo.core.cell.CellRepository;
 import f_thon.godlifebingo.core.godlife.GodLifeRepository;
 import f_thon.godlifebingo.core.users.Users;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +49,21 @@ public class BingoService {
             .toList();
 
         cellRepository.saveAll(cells);
+    }
+
+    public BingoGetResponse get(Long bingoId) {
+
+        Bingo bingo = bingoRepository.findById(bingoId).get();
+
+        List<Cell> cells = cellRepository.findByBingoId(bingoId);
+        List<CellResponse> cellResponses = cells.stream()
+            .map(CellResponse::of)
+            .toList();
+
+        BingoGetResponse response = BingoGetResponse.builder()
+            .bingo(BingoResponse.of(bingo))
+            .cells(cellResponses)
+            .build();
+        return response;
     }
 }

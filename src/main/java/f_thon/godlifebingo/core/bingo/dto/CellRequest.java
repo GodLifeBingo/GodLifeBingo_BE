@@ -19,8 +19,8 @@ public class CellRequest {
 
     public Cell toCell(Bingo bingo){
         return Cell.builder()
-            .row(row)
-            .col(col)
+            .r(row)
+            .c(col)
             .bingo(bingo)
             .godlife(GodLife.builder().id(godLifeId).build())
             .build();
