@@ -1,7 +1,9 @@
 package f_thon.godlifebingo.core.bingo;
 
+import f_thon.godlifebingo.core.bingo.dto.BingoListRequest;
+import f_thon.godlifebingo.core.bingo.dto.BingoListResponse;
 import java.util.List;
 
 public interface BingoCustomRepository {
-    List<Bingo> getList(Long userId, long limit, long offset);
+    BingoListResponse getList(Long userId, BingoListRequest request);
 }
