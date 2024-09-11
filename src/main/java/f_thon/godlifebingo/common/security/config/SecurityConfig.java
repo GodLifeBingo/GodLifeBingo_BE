@@ -26,7 +26,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                     .userService(customOAuth2UserService))
-                .loginPage("/login"));
+                .loginPage("/login.html"));
 
         http
             .authorizeHttpRequests(auth -> auth
