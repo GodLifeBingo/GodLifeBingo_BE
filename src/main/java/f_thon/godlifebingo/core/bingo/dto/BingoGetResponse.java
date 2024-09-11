@@ -1,6 +1,7 @@
 package f_thon.godlifebingo.core.bingo.dto;
 
-import f_thon.godlifebingo.core.cell.Cell;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,5 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class BingoGetResponse {
-    private List<Cell> cellList;
+    private BingoResponse bingo;
+    private List<CellResponse> cells;
 }

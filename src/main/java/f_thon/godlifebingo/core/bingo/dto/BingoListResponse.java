@@ -1,7 +1,6 @@
 package f_thon.godlifebingo.core.bingo.dto;
 
-
-import f_thon.godlifebingo.core.cell.Cell;
+import f_thon.godlifebingo.core.bingo.Bingo;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BingoCreateResponse {
-    private List<Cell> cellList;
+public class BingoListResponse {
+    private List<BingoRow> bingoList;
+    private Long allPage;
 }

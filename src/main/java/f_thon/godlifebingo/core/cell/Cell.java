@@ -13,8 +13,7 @@ import lombok.*;
 @Entity
 public class Cell extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int currentProgress;
     private int rowNum;
