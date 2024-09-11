@@ -12,7 +12,7 @@ public interface GodLifeRepository extends JpaRepository<GodLife, Long> {
 
     @Query("""
          select
-           new f_thon.godlifebingo.core.godlife.GodLifeStatistic(gl.title, gl.id, sum(c.currentProgress), sum(b.totalCount), gl.allUserCompletedRate)
+           new f_thon.godlifebingo.core.godlife.dto.GodLifeStatistic(gl.title, gl.id, sum(c.currentProgress), sum(b.totalCount), gl.allUserCompletedRate)
          from
            GodLife  gl
          left join Cell c on c.godlife = gl
