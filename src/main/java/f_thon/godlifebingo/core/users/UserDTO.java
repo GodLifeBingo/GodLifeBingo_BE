@@ -1,7 +1,6 @@
-package f_thon.godlifebingo.domain.user;
+package f_thon.godlifebingo.core.users;
 
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 

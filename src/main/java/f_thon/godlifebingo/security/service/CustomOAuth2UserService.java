@@ -1,12 +1,12 @@
 package f_thon.godlifebingo.security.service;
 
-import f_thon.godlifebingo.domain.user.UserRole;
+import f_thon.godlifebingo.core.users.UserRole;
+import f_thon.godlifebingo.core.users.Users;
+import f_thon.godlifebingo.core.users.UsersRepository;
 import f_thon.godlifebingo.security.dto.CustomOAuth2User;
 import f_thon.godlifebingo.security.dto.GoogleOAuth2Response;
 import f_thon.godlifebingo.security.dto.OAuth2Response;
-import f_thon.godlifebingo.domain.user.User;
-import f_thon.godlifebingo.domain.user.UserDTO;
-import f_thon.godlifebingo.domain.user.UserRepository;
+import f_thon.godlifebingo.core.users.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -41,11 +41,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String username = provider + " " + providerId;
 
 
-        User existsUser = userRepository.findByUsername(username).orElse(null);
+        Users existsUser = usersRepository.findByUsername(username).orElse(null);
 //        User existsUser = userRepository.findByEmail(oAuth2Response.getEmail()).orElse(null);
 
         if (existsUser == null) {
-            User user = User.builder()
+            Users user = Users.builder()
                 .providerType(provider)
                 .username(username)
                 .email(email)
@@ -53,7 +53,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .role(UserRole.USER)
                 .build();
 
-            userRepository.save(user);
+            usersRepository.save(user);
 
             UserDTO userDTO = UserDTO.builder()
                 .username(username)
