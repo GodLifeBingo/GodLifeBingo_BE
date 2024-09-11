@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class GodLifeResponse {
+    private Long godLifeId;
     private String title;
     private String description;
     private String imageUrl;
@@ -19,6 +20,7 @@ public class GodLifeResponse {
 
     public static GodLifeResponse of(GodLife godLife){
         return GodLifeResponse.builder()
+            .godLifeId(godLife.getId())
             .title(godLife.getTitle())
             .description(godLife.getDescription())
             .imageUrl(godLife.getImageUrl())

@@ -3,12 +3,14 @@ package f_thon.godlifebingo.api;
 import f_thon.godlifebingo.core.bingo.BingoService;
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
 import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
+import f_thon.godlifebingo.core.bingo.dto.BingoListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,5 +28,10 @@ public class BingoController {
     @GetMapping("/{bingoId}")
     public BingoGetResponse get(@PathVariable("bingoId") Long bingoId){
         return bingoService.get(bingoId);
+    }
+
+    @GetMapping("/list")
+    public BingoListResponse getList(@RequestParam long limit, @RequestParam long offset){
+        return bingoService.getList(limit, offset);
     }
 }

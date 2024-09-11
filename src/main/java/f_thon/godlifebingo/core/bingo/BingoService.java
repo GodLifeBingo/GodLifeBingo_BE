@@ -2,7 +2,9 @@ package f_thon.godlifebingo.core.bingo;
 
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
 import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
+import f_thon.godlifebingo.core.bingo.dto.BingoListResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoResponse;
+import f_thon.godlifebingo.core.bingo.dto.BingoRow;
 import f_thon.godlifebingo.core.bingo.dto.CellRequest;
 import f_thon.godlifebingo.core.bingo.dto.CellResponse;
 import f_thon.godlifebingo.core.cell.Cell;
@@ -65,5 +67,20 @@ public class BingoService {
             .cells(cellResponses)
             .build();
         return response;
+    }
+
+    public BingoListResponse getList(long limit, long offset) {
+        // Spring Security 적용 후 UserId Context에서 받아오기
+        List<Bingo> bingoList = bingoRepository.getList(1L, limit, offset);
+        long count = bingoRepository.count() / limit + 1;
+
+        List<BingoRow> bingoRowList = bingoList.stream()
+            .map(BingoRow::of)
+            .toList();
+
+        return BingoListResponse.builder()
+            .bingoList(bingoRowList)
+            .allPage(count)
+            .build();
     }
 }

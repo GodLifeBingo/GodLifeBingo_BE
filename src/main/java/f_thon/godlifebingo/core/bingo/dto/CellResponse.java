@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CellResponse {
     private GodLifeResponse godLife;
+    private Long cellId;
     private int row;
     private int col;
     private int currentProgress;
 
     public static CellResponse of(Cell cell){
         return CellResponse.builder()
+            .cellId(cell.getId())
             .row(cell.getR())
             .col(cell.getC())
             .currentProgress(cell.getCurrentProgress())

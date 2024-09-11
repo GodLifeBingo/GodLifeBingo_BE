@@ -12,27 +12,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BingoResponse {
-
+public class BingoRow {
     private Long bingoId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS", timezone = "Asia/Seoul")
     private LocalDateTime startDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS", timezone = "Asia/Seoul")
     private LocalDateTime endDate;
-    private int size;
-    private String color;
     private String title;
-    private int totalCount;
 
-    public static BingoResponse of(Bingo bingo){
-        return BingoResponse.builder()
+    public static BingoRow of(Bingo bingo){
+        return BingoRow.builder()
             .bingoId(bingo.getId())
             .startDate(bingo.getStartDate())
             .endDate(bingo.getEndDate())
-            .size(bingo.getSize())
-            .color(bingo.getColor())
             .title(bingo.getTitle())
-            .totalCount(bingo.getTotalCount())
             .build();
     }
 }
