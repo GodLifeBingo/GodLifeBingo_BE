@@ -1,6 +1,6 @@
-package f_thon.godlifebingo.security.dto;
+package f_thon.godlifebingo.common.security.dto;
 
-import f_thon.godlifebingo.core.users.UserDTO;
+import f_thon.godlifebingo.core.users.dto.UserDTO;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;

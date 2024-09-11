@@ -1,6 +1,6 @@
 package f_thon.godlifebingo.common.annotation;
 
-import f_thon.godlifebingo.security.dto.CustomOAuth2User;
+import f_thon.godlifebingo.common.security.dto.CustomOAuth2User;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

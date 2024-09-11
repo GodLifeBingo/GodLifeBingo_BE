@@ -1,6 +1,6 @@
-package f_thon.godlifebingo.security.config;
+package f_thon.godlifebingo.common.security.config;
 
-import f_thon.godlifebingo.security.service.CustomOAuth2UserService;
+import f_thon.godlifebingo.common.security.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
