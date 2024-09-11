@@ -2,6 +2,7 @@ package f_thon.godlifebingo.core.bingo;
 
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
 import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
+import f_thon.godlifebingo.core.bingo.dto.BingoListRequest;
 import f_thon.godlifebingo.core.cell.dto.BingoCellInfo;
 import f_thon.godlifebingo.core.cell.dto.BingoCellResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoListResponse;
@@ -31,10 +32,7 @@ public class BingoService {
     private final GodLifeRepository godLifeRepository;
     private final CellRepository cellRepository;
 
-    public void create(BingoCreateRequest request) {
-        // 후에 SecurityContext에서 가져오면 교체
-        Users users = Users.builder().id(1L).build();
-
+    public void create(Long userId, BingoCreateRequest request) {
         // 빙고 추가
         Bingo bingo = Bingo.builder()
             .title(request.getTitle())
@@ -43,7 +41,7 @@ public class BingoService {
             .endDate(request.getEndDate())
             .color(request.getColor())
             .totalCount(request.getEndDate().compareTo(request.getStartDate())+1)
-            .users(users)
+            .users(Users.builder().id(userId).build())
             .build();
 
         bingoRepository.save(bingo);
@@ -57,9 +55,12 @@ public class BingoService {
         cellRepository.saveAll(cells);
     }
 
-    public BingoGetResponse get(Long bingoId) {
+    public BingoGetResponse get(Long userId, Long bingoId) {
 
-        Bingo bingo = bingoRepository.findById(bingoId).get();
+        Bingo bingo = bingoRepository.findById(bingoId).orElseThrow();
+        if(userId != bingo.getUsers().getId()){
+            throw new RuntimeException();
+        }
 
         List<Cell> cells = cellRepository.findByBingoId(bingoId);
         List<CellResponse> cellResponses = cells.stream()
@@ -73,20 +74,10 @@ public class BingoService {
         return response;
     }
 
-    public BingoListResponse getList(long limit, long offset) {
-        // Spring Security 적용 후 UserId Context에서 받아오기
-        List<Bingo> bingoList = bingoRepository.getList(1L, limit, offset);
-        long count = bingoRepository.count() / limit + 1;
-
-        List<BingoRow> bingoRowList = bingoList.stream()
-            .map(BingoRow::of)
-            .toList();
-
-        return BingoListResponse.builder()
-            .bingoList(bingoRowList)
-            .allPage(count)
-            .build();
+    public BingoListResponse getList(Long userId, BingoListRequest request) {
+        return bingoRepository.getList(userId, request);
     }
+
     public BingoCellResponse getBingoCells(Long bingoId, Long userId) {
         Bingo bingo = checkBingoOwnership(bingoId, userId);
 
