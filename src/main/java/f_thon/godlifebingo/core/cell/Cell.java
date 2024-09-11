@@ -17,8 +17,8 @@ public class Cell extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int currentProgress;
-    private int row;
-    private int col;
+    private int rowNum;
+    private int colNum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bingo_id")
@@ -28,4 +28,11 @@ public class Cell extends BaseEntity {
     @JoinColumn(name = "godlife_id")
     private GodLife godlife;
 
+    public void updateProgress() {
+        this.currentProgress++;
+    }
+
+    public void rollbackProgress() {
+        this.currentProgress--;
+    }
 }

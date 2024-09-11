@@ -7,6 +7,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class UserDTO {
+    private Long id;
     private String providerType;
     private UserRole role;
     private String name;
