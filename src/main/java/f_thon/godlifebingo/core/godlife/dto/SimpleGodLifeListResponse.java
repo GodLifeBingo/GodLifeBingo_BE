@@ -22,7 +22,7 @@ public class SimpleGodLifeListResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    static class SimpleGodLifeResponse {
+    static public class SimpleGodLifeResponse {
         private String title;
         private String imageUrl;
         private Long id;
