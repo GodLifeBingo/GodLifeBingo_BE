@@ -1,5 +1,6 @@
 package f_thon.godlifebingo.security.controller;
 
+import f_thon.godlifebingo.common.annotation.CurrentUserId;
 import java.io.IOException;
 import java.nio.file.Files;
 import org.springframework.core.io.ClassPathResource;
@@ -34,7 +35,8 @@ public class TestController {
 
     @GetMapping("/mypage")
     @ResponseBody
-    public String mypage() {
+    public String mypage(@CurrentUserId Long userId) {
+        System.out.println(userId);
         return "mypage";
     }
 }

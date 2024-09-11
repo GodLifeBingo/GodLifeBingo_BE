@@ -56,6 +56,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             usersRepository.save(user);
 
             UserDTO userDTO = UserDTO.builder()
+                .id(user.getId())
                 .username(username)
                 .providerType(provider)
                 .name(name)
@@ -65,6 +66,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return new CustomOAuth2User(userDTO);
         } else {
             UserDTO userDTO = UserDTO.builder()
+                .id(existsUser.getId())
                 .providerType(existsUser.getProviderType())
                 .username(existsUser.getUsername())
                 .name(existsUser.getName())
