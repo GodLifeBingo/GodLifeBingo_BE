@@ -74,9 +74,9 @@ jobs:
         password: ${{ secrets.NCP_PASSWORD }}
         port: ${{ secrets.NCP_PORT }}
         script: |
-          sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          sudo docker stop $(docker ps -a -q | grep -v -e 88aef52b5191 -e 9d3664d91a92 -e ff6400a54102)
-          sudo docker rm -f $(docker ps -a -q | grep -v -e 88aef52b5191 -e 9d3664d91a92 -e ff6400a54102)
-          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
-          sudo docker run -d -p 8081:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker stop $(docker ps -a -q | grep -v -e 88aef52b5191 -e 9d3664d91a92 -e ff6400a54102)
+          docker rm -f $(docker ps -a -q | grep -v -e 88aef52b5191 -e 9d3664d91a92 -e ff6400a54102)
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
+          docker run -d -p 8081:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.PROJECT_NAME }}
           # sudo docker image prune -f
