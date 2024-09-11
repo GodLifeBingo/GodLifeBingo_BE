@@ -24,7 +24,7 @@ public class GodLifeResponse {
             .title(godLife.getTitle())
             .description(godLife.getDescription())
             .imageUrl(godLife.getImageUrl())
-            .allUserCompletedRate(godLife.getAllUserCompletedRate())
+            .allUserCompletedRate(BigDecimal.valueOf(godLife.getAllUserCompletedRate()))
             .build();
     }
 }

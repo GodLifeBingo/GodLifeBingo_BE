@@ -20,8 +20,8 @@ public class CellResponse {
     public static CellResponse of(Cell cell){
         return CellResponse.builder()
             .cellId(cell.getId())
-            .row(cell.getR())
-            .col(cell.getC())
+            .row(cell.getRowNum())
+            .col(cell.getColNum())
             .currentProgress(cell.getCurrentProgress())
             .godLife(GodLifeResponse.of(cell.getGodlife()))
             .build();
