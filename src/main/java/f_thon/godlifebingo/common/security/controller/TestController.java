@@ -1,4 +1,4 @@
-package f_thon.godlifebingo.security.controller;
+package f_thon.godlifebingo.common.security.controller;
 
 import f_thon.godlifebingo.common.annotation.CurrentUserId;
 import java.io.IOException;

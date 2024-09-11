@@ -1,12 +1,12 @@
-package f_thon.godlifebingo.security.service;
+package f_thon.godlifebingo.common.security.service;
 
 import f_thon.godlifebingo.core.users.UserRole;
 import f_thon.godlifebingo.core.users.Users;
 import f_thon.godlifebingo.core.users.UsersRepository;
-import f_thon.godlifebingo.security.dto.CustomOAuth2User;
-import f_thon.godlifebingo.security.dto.GoogleOAuth2Response;
-import f_thon.godlifebingo.security.dto.OAuth2Response;
-import f_thon.godlifebingo.core.users.UserDTO;
+import f_thon.godlifebingo.common.security.dto.CustomOAuth2User;
+import f_thon.godlifebingo.common.security.dto.GoogleOAuth2Response;
+import f_thon.godlifebingo.common.security.dto.OAuth2Response;
+import f_thon.godlifebingo.core.users.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

@@ -1,4 +1,4 @@
-package f_thon.godlifebingo.core.godlife;
+package f_thon.godlifebingo.core.godlife.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

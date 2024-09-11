@@ -1,10 +1,11 @@
 package f_thon.godlifebingo.core.godlife;
 
 import f_thon.godlifebingo.common.annotation.CurrentUserId;
+import f_thon.godlifebingo.core.godlife.dto.GodLifeStatisticsListResponse;
+import f_thon.godlifebingo.core.godlife.dto.SimpleGodLifeListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

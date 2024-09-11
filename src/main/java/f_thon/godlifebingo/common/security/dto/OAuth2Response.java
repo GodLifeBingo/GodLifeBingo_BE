@@ -1,4 +1,4 @@
-package f_thon.godlifebingo.security.dto;
+package f_thon.godlifebingo.common.security.dto;
 
 public interface OAuth2Response {
 

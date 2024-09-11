@@ -1,6 +1,9 @@
 package f_thon.godlifebingo.core.godlife;
 
-import f_thon.godlifebingo.core.godlife.SimpleGodLifeListResponse.SimpleGodLifeResponse;
+import f_thon.godlifebingo.core.godlife.dto.GodLifeStatistic;
+import f_thon.godlifebingo.core.godlife.dto.GodLifeStatisticsListResponse;
+import f_thon.godlifebingo.core.godlife.dto.SimpleGodLifeListResponse;
+import f_thon.godlifebingo.core.godlife.dto.SimpleGodLifeListResponse.SimpleGodLifeResponse;
 import f_thon.godlifebingo.core.users.Users;
 import f_thon.godlifebingo.core.users.UsersRepository;
 import java.util.List;

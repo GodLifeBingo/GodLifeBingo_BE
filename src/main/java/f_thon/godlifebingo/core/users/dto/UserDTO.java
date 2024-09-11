@@ -1,5 +1,6 @@
-package f_thon.godlifebingo.core.users;
+package f_thon.godlifebingo.core.users.dto;
 
+import f_thon.godlifebingo.core.users.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 

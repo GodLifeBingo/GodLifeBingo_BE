@@ -1,5 +1,6 @@
 package f_thon.godlifebingo.core.godlife;
 
+import f_thon.godlifebingo.core.godlife.dto.GodLifeStatistic;
 import f_thon.godlifebingo.core.users.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
