@@ -20,7 +20,6 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         Authentication authentication) throws IOException {
 
         String sessionId = request.getSession().getId();
-        log.info("sessionId: " + sessionId);
         System.out.println(sessionId);
 
         ResponseCookie cookie = ResponseCookie.from("JSESSIONID", sessionId)
