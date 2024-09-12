@@ -19,7 +19,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
-            .cors(cors -> cors.disable())
             .csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
@@ -27,7 +26,7 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                     .userService(customOAuth2UserService))
                 .loginPage("/login.html")
-                .defaultSuccessUrl("http://localhost:3000/"));
+                .defaultSuccessUrl("http://localhost:3000"));
 
         http
             .authorizeHttpRequests(auth -> auth
