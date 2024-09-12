@@ -24,7 +24,7 @@ public class GodLifeController {
     }
 
     @GetMapping("/statistics")
-    public GodLifeStatisticsListResponse getGodLifeSimple(@RequestParam("query") String query,
+    public GodLifeStatisticsListResponse getGodLifeSimple(@RequestParam(value = "query", defaultValue = "") String query,
         @PageableDefault Pageable pageable, @CurrentUserId Long userId) {
         return godLifeService.getGodLifeStatisticsList(query, pageable, userId);
     }
