@@ -42,7 +42,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 
         Users existsUser = usersRepository.findByUsername(username).orElse(null);
-//        User existsUser = userRepository.findByEmail(oAuth2Response.getEmail()).orElse(null);
 
         if (existsUser == null) {
             Users user = Users.builder()
