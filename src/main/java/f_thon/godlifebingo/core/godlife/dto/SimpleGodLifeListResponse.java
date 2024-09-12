@@ -26,5 +26,6 @@ public class SimpleGodLifeListResponse {
         private String title;
         private String imageUrl;
         private Long id;
+        private Boolean isOneOff;
     }
 }

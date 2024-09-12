@@ -32,6 +32,7 @@ public class GodLifeService {
                 .id(godlife.getId())
                 .imageUrl(godlife.getImageUrl())
                 .title(godlife.getTitle())
+                .isOneOff(godlife.isOneOff())
                 .build())
             .toList();
 
