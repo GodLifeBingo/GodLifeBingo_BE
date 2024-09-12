@@ -23,9 +23,8 @@ public class BingoController {
     private final BingoService bingoService;
 
     @PostMapping
-    public String create(@CurrentUserId Long userId, @RequestBody BingoCreateRequest request){
+    public void create(@CurrentUserId Long userId, @RequestBody BingoCreateRequest request){
         bingoService.create(userId, request);
-        return "success";
     }
 
     @GetMapping("/{bingoId}")
