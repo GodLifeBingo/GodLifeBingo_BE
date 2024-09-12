@@ -26,6 +26,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
             .httpOnly(true)
             .secure(true)
             .sameSite("None")
+            .path("/")
             .maxAge(60 * 60)//1시간
             .build();
 
