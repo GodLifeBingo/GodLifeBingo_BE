@@ -1,5 +1,6 @@
 package f_thon.godlifebingo.common.security.config;
 
+import f_thon.godlifebingo.common.security.handler.CustomOAuth2SuccessHandler;
 import f_thon.godlifebingo.common.security.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,15 +17,16 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-    @Bean
-    public CookieSerializer cookieSerializer() {
-        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setSameSite("None");
-        serializer.setUseSecureCookie(true);
-        return serializer;
-    }
+//    @Bean
+//    public CookieSerializer cookieSerializer() {
+//        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+//        serializer.setSameSite("None");
+//        serializer.setUseSecureCookie(true);
+//        return serializer;
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -36,7 +38,7 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                     .userService(customOAuth2UserService))
                 .loginPage("/login.html")
-                .defaultSuccessUrl("https://god-life-bingo.vercel.app"));
+                .successHandler(customOAuth2SuccessHandler));
 
         http
             .authorizeHttpRequests(auth -> auth
