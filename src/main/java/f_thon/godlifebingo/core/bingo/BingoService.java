@@ -1,6 +1,7 @@
 package f_thon.godlifebingo.core.bingo;
 
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
+import f_thon.godlifebingo.core.bingo.dto.BingoCreateResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoListRequest;
 import f_thon.godlifebingo.core.cell.dto.BingoCellInfo;
@@ -32,7 +33,7 @@ public class BingoService {
     private final GodLifeRepository godLifeRepository;
     private final CellRepository cellRepository;
 
-    public void create(Long userId, BingoCreateRequest request) {
+    public BingoCreateResponse create(Long userId, BingoCreateRequest request) {
         // 빙고 추가
         Bingo bingo = Bingo.builder()
             .title(request.getTitle())
@@ -44,7 +45,7 @@ public class BingoService {
             .users(Users.builder().id(userId).build())
             .build();
 
-        bingoRepository.save(bingo);
+        Bingo savedBingo = bingoRepository.save(bingo);
 
         // 셀 추가
         List<CellRequest> cellRequests = request.getCells();
@@ -53,6 +54,10 @@ public class BingoService {
             .toList();
 
         cellRepository.saveAll(cells);
+
+        return BingoCreateResponse.builder()
+            .bingoId(savedBingo.getId())
+            .build();
     }
 
     public BingoGetResponse get(Long userId, Long bingoId) {

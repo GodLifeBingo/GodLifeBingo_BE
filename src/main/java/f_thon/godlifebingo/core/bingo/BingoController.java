@@ -2,6 +2,7 @@ package f_thon.godlifebingo.core.bingo;
 
 import f_thon.godlifebingo.common.annotation.CurrentUserId;
 import f_thon.godlifebingo.core.bingo.dto.BingoCreateRequest;
+import f_thon.godlifebingo.core.bingo.dto.BingoCreateResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoGetResponse;
 import f_thon.godlifebingo.core.bingo.dto.BingoListRequest;
 import f_thon.godlifebingo.core.bingo.dto.BingoListResponse;
@@ -23,8 +24,8 @@ public class BingoController {
     private final BingoService bingoService;
 
     @PostMapping
-    public void create(@CurrentUserId Long userId, @RequestBody BingoCreateRequest request){
-        bingoService.create(userId, request);
+    public BingoCreateResponse create(@CurrentUserId Long userId, @RequestBody BingoCreateRequest request){
+        return bingoService.create(userId, request);
     }
 
     @GetMapping("/{bingoId}")
