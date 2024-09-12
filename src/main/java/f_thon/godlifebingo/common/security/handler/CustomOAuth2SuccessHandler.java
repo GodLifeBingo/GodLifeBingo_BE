@@ -1,5 +1,6 @@
 package f_thon.godlifebingo.common.security.handler;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,6 +15,12 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         Authentication authentication) throws IOException {
 
-        response.sendRedirect("/success-page");
+        String sessionId = request.getSession().getId();
+        System.out.println(sessionId);
+
+        Cookie cookie = new Cookie("JSESSIONID", sessionId);
+
+        response.addCookie(cookie);
+        response.sendRedirect("http://localhost:3000");
     }
 }
