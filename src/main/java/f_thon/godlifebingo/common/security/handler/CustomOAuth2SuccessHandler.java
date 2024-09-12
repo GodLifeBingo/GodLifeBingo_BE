@@ -19,6 +19,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         System.out.println(sessionId);
 
         Cookie cookie = new Cookie("JSESSIONID", sessionId);
+        cookie.setDomain("god-life-bingo.vercel.app");
 
         response.addCookie(cookie);
         response.sendRedirect("https://god-life-bingo.vercel.app");
