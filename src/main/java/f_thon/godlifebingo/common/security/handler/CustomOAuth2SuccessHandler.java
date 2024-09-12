@@ -4,11 +4,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
@@ -16,6 +18,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         Authentication authentication) throws IOException {
 
         String sessionId = request.getSession().getId();
+        log.info("sessionId: " + sessionId);
         System.out.println(sessionId);
 
         Cookie cookie = new Cookie("JSESSIONID", sessionId);
