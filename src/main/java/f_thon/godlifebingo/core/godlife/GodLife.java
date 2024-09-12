@@ -23,4 +23,5 @@ public class GodLife extends BaseEntity {
     private String description;
     private String imageUrl;
     private Double allUserCompletedRate;
+    private boolean isOneOff;
 }

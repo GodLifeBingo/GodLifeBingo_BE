@@ -17,6 +17,7 @@ public class GodLifeResponse {
     private String description;
     private String imageUrl;
     private BigDecimal allUserCompletedRate;
+    private Boolean isOneOff;
 
     public static GodLifeResponse of(GodLife godLife){
         return GodLifeResponse.builder()
@@ -25,6 +26,7 @@ public class GodLifeResponse {
             .description(godLife.getDescription())
             .imageUrl(godLife.getImageUrl())
             .allUserCompletedRate(BigDecimal.valueOf(godLife.getAllUserCompletedRate()))
+            .isOneOff(godLife.isOneOff())
             .build();
     }
 }

@@ -26,7 +26,8 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                     .userService(customOAuth2UserService))
-                .loginPage("/login.html"));
+                .loginPage("/login.html")
+                .defaultSuccessUrl("http://localhost:3000/"));
 
         http
             .authorizeHttpRequests(auth -> auth
