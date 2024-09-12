@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -21,14 +23,14 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         log.info("sessionId: " + sessionId);
         System.out.println(sessionId);
 
-        Cookie cookie = new Cookie("JSESSIONID", sessionId);
-        cookie.setSecure(true);  // HTTPS 사용 시 필수
-        cookie.setHttpOnly(true); // 클라이언트 스크립트로부터 쿠키 보호
-//        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60); // 쿠키의 유효시간 설정
-//        cookie.setDomain("*.vercel.app");
+        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", sessionId)
+            .httpOnly(true)
+            .secure(true)
+            .sameSite("None")
+            .maxAge(60 * 60)//1시간
+            .build();
 
-        response.addCookie(cookie);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.sendRedirect("https://god-life-bingo.vercel.app");
     }
 }
