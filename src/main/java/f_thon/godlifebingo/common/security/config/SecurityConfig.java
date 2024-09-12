@@ -24,6 +24,7 @@ public class SecurityConfig {
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setSameSite("None");
+        serializer.setDomainName("god-life-bingo.vercel.app");
         serializer.setUseSecureCookie(true);
         return serializer;
     }
