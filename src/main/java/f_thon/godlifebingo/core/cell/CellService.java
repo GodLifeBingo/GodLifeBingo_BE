@@ -81,7 +81,7 @@ public class CellService {
             throw new RuntimeException();
         });
 
-        if (cell.getBingo().getUsers().getId().equals(userId)) {
+        if (!cell.getBingo().getUsers().getId().equals(userId)) {
             log.error("cell의 접근 권한이 없습니다. cell id : {}, user id : {}", cellId, userId);
             throw new RuntimeException();
         }
