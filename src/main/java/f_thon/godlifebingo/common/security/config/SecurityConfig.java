@@ -1,5 +1,6 @@
 package f_thon.godlifebingo.common.security.config;
 
+import f_thon.godlifebingo.common.security.handler.CustomLogoutSuccessHandler;
 import f_thon.godlifebingo.common.security.handler.CustomOAuth2SuccessHandler;
 import f_thon.godlifebingo.common.security.service.CustomOAuth2UserService;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
@@ -46,8 +48,7 @@ public class SecurityConfig {
         http
             .logout(logout -> logout
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("https://god-life-bingo.vercel.app/login"));
+                .logoutSuccessHandler(customLogoutSuccessHandler));
 
         return http.build();
     }
