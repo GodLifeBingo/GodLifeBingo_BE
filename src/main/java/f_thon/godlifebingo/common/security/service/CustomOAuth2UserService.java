@@ -1,5 +1,7 @@
 package f_thon.godlifebingo.common.security.service;
 
+import f_thon.godlifebingo.common.security.dto.KakaoOAuth2Response;
+import f_thon.godlifebingo.common.security.dto.NaverOAuth2Response;
 import f_thon.godlifebingo.core.users.UserRole;
 import f_thon.godlifebingo.core.users.Users;
 import f_thon.godlifebingo.core.users.UsersRepository;
@@ -28,7 +30,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuth2Response oAuth2Response = null;
 
-        if (registrationId.equals("google")) {
+        if (registrationId.equals("kakao")) {
+            oAuth2Response = new KakaoOAuth2Response(oAuth2User.getAttributes());
+        } else if (registrationId.equals("naver")) {
+            oAuth2Response = new NaverOAuth2Response(oAuth2User.getAttributes());
+        } else if (registrationId.equals("google")) {
             oAuth2Response = new GoogleOAuth2Response(oAuth2User.getAttributes());
         } else {
             return null;
