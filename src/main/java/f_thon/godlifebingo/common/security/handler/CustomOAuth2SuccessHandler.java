@@ -31,7 +31,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
             .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-//        response.sendRedirect("https://god-life-bingo.vercel.app");
-        response.sendRedirect("/");
+        response.sendRedirect("https://god-life-bingo.vercel.app");
+//        response.sendRedirect("http://localhost:3000");
     }
 }
