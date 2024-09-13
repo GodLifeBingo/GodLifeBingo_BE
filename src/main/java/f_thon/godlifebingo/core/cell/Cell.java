@@ -28,12 +28,24 @@ public class Cell extends BaseEntity {
     @JoinColumn(name = "godlife_id")
     private GodLife godlife;
 
-    public void updateProgress() {
-        this.currentProgress++;
+    public void updateProgress(Bingo bingo, GodLife godLife) {
+        int totalCount = bingo.getTotalCount();
+        boolean isOneOff = godLife.isOneOff();
+        if (isOneOff) {
+            this.currentProgress += totalCount;
+        } else {
+            this.currentProgress++;
+        }
     }
 
-    public void rollbackProgress() {
-        this.currentProgress--;
+    public void rollbackProgress(Bingo bingo, GodLife godLife) {
+        int totalCount = bingo.getTotalCount();
+        boolean isOneOff = godLife.isOneOff();
+        if (isOneOff) {
+            this.currentProgress -= totalCount;
+        } else {
+            this.currentProgress--;
+        }
     }
     public void setClicked(boolean isClicked){
         this.isClicked = isClicked;

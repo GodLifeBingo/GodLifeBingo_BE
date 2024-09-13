@@ -45,8 +45,8 @@ class CellControllerTest {
 
     Users users;
     Bingo bingo;
-    GodLife godLife;
-    Cell cell;
+    GodLife godLife1, godLife7;
+    Cell cell1, cell7;
     @Autowired
     private UsersRepository usersRepository;
     @Autowired
@@ -75,22 +75,37 @@ class CellControllerTest {
             .users(users)
             .build();
 
-        godLife = GodLife.builder()
+        godLife1 = GodLife.builder()
+            .title("아침 6시에 일어나기")
+            .description("매일 아침 6시에 일어나기")
+            .imageUrl("test")
+            .isOneOff(true)
+            .build();
+
+        godLife7 = GodLife.builder()
             .title("아침 6시에 일어나기")
             .description("매일 아침 6시에 일어나기")
             .imageUrl("test")
             .build();
 
-        cell = Cell.builder()
+        cell1 = Cell.builder()
             .currentProgress(0)
-            .godlife(godLife)
+            .godlife(godLife1)
+            .bingo(bingo)
+            .build();
+
+        cell7 = Cell.builder()
+            .currentProgress(0)
+            .godlife(godLife7)
             .bingo(bingo)
             .build();
 
         usersRepository.save(users);
         bingoRepository.save(bingo);
-        godLifeRepository.save(godLife);
-        cellRepository.save(cell);
+        godLifeRepository.save(godLife1);
+        godLifeRepository.save(godLife7);
+        cellRepository.save(cell1);
+        cellRepository.save(cell7);
     }
 
 
@@ -100,31 +115,47 @@ class CellControllerTest {
         @Test
         public void updateCell_success() {
             // when
-            cellController.updateCell(cell.getId(), users.getId());
+            cellController.updateCell(cell7.getId(), users.getId());
 
             // then
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(1, cell.getCurrentProgress());
+                assertEquals(1, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
         }
+
+        @DisplayName("빙고 기간동안 한번 업데이트 하는 셀은, 진행도를 모두 업데이트 한다.")
+        @Test
+        public void update_cell_all() {
+            // when
+            cellController.updateCell(cell1.getId(), users.getId());
+
+            // then
+            Optional<Cell> findCell = cellRepository.findById(cell1.getId());
+            findCell.ifPresentOrElse((foundCell) -> {
+                assertEquals(7, cell1.getCurrentProgress());
+            }, () -> {
+                Assertions.fail("Unreachable statement");
+            });
+        }
+
 
         @DisplayName("사용자는 같은 셀을 하루에 두번 업데이트 할 수 없다.")
         @Test
         @Disabled
         public void updateCell_noDupUpdate() {
             // when
-            cellController.updateCell(cell.getId(), users.getId());
+            cellController.updateCell(cell7.getId(), users.getId());
 
             // then
             assertThrows(RuntimeException.class,
-                () -> cellController.updateCell(cell.getId(), users.getId()));
+                () -> cellController.updateCell(cell7.getId(), users.getId()));
 
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(1, cell.getCurrentProgress());
+                assertEquals(1, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
@@ -143,11 +174,11 @@ class CellControllerTest {
             usersRepository.save(user2);
             // then
             assertThrows(RuntimeException.class,
-                () -> cellController.updateCell(cell.getId(), user2.getId()));
+                () -> cellController.updateCell(cell7.getId(), user2.getId()));
 
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(0, cell.getCurrentProgress());
+                assertEquals(0, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
@@ -165,21 +196,45 @@ class CellControllerTest {
         @Test
         public void rollbackCell_success() {
             // when
-            cellController.updateCell(cell.getId(), users.getId());
+            cellController.updateCell(cell7.getId(), users.getId());
 
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(1, cell.getCurrentProgress());
+                assertEquals(1, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
 
-            cellController.updateCell(cell.getId(), users.getId());
+            cellController.updateCell(cell7.getId(), users.getId());
 
             // then
-            Optional<Cell> findCell2 = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell2 = cellRepository.findById(cell7.getId());
             findCell2.ifPresentOrElse((foundCell) -> {
-                assertEquals(0, cell.getCurrentProgress());
+                assertEquals(0, cell7.getCurrentProgress());
+            }, () -> {
+                Assertions.fail("Unreachable statement");
+            });
+        }
+
+        @DisplayName("1회용 셀은 한번 롤백시 모든 진행도 (크기) 를 되돌린다.")
+        @Test
+        public void rollbackCell1_success() {
+            // when
+            cellController.updateCell(cell1.getId(), users.getId());
+
+            Optional<Cell> findCell = cellRepository.findById(cell1.getId());
+            findCell.ifPresentOrElse((foundCell) -> {
+                assertEquals(7, cell1.getCurrentProgress());
+            }, () -> {
+                Assertions.fail("Unreachable statement");
+            });
+
+            cellController.updateCell(cell1.getId(), users.getId());
+
+            // then
+            Optional<Cell> findCell2 = cellRepository.findById(cell1.getId());
+            findCell2.ifPresentOrElse((foundCell) -> {
+                assertEquals(0, cell1.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
@@ -191,11 +246,11 @@ class CellControllerTest {
         public void rollbackCell_noDupRollBack() {
             // then
             assertThrows(RuntimeException.class,
-                () -> cellController.updateCell(cell.getId(), users.getId()));
+                () -> cellController.updateCell(cell7.getId(), users.getId()));
 
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(0, cell.getCurrentProgress());
+                assertEquals(0, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
@@ -205,11 +260,11 @@ class CellControllerTest {
         @Test
         public void rollbackCell_noOwnerSHip() {
             // when
-            cellController.updateCell(cell.getId(), users.getId());
+            cellController.updateCell(cell7.getId(), users.getId());
 
-            Optional<Cell> findCell = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell = cellRepository.findById(cell7.getId());
             findCell.ifPresentOrElse((foundCell) -> {
-                assertEquals(1, cell.getCurrentProgress());
+                assertEquals(1, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
@@ -224,11 +279,11 @@ class CellControllerTest {
 
             // then
             assertThrows(RuntimeException.class,
-                () -> cellController.updateCell(cell.getId(), user2.getId()));
+                () -> cellController.updateCell(cell7.getId(), user2.getId()));
 
-            Optional<Cell> findCell2 = cellRepository.findById(cell.getId());
+            Optional<Cell> findCell2 = cellRepository.findById(cell7.getId());
             findCell2.ifPresentOrElse((foundCell) -> {
-                assertEquals(1, cell.getCurrentProgress());
+                assertEquals(1, cell7.getCurrentProgress());
             }, () -> {
                 Assertions.fail("Unreachable statement");
             });
