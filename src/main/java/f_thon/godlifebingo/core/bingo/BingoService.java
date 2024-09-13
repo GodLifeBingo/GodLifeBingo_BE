@@ -64,6 +64,8 @@ public class BingoService {
 
         Bingo bingo = bingoRepository.findById(bingoId).orElseThrow();
         if(userId != bingo.getUsers().getId()){
+            System.out.println("userId: " + userId);
+            System.out.println("bingo.getUsers().getId(): " + bingo.getUsers().getId());
             throw new RuntimeException();
         }
 
