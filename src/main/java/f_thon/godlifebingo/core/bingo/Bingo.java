@@ -32,6 +32,6 @@ public class Bingo extends BaseEntity {
     private Users users;
 
     public void completeBingo(){
-        this.isCompleted = false;
+        this.isCompleted = true;
     }
 }
