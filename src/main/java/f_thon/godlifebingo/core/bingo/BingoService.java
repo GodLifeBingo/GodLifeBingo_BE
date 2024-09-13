@@ -15,6 +15,7 @@ import f_thon.godlifebingo.core.cell.Cell;
 import f_thon.godlifebingo.core.cell.CellRepository;
 import f_thon.godlifebingo.core.godlife.GodLifeRepository;
 import f_thon.godlifebingo.core.users.Users;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class BingoService {
             .startDate(request.getStartDate())
             .endDate(request.getEndDate())
             .color(request.getColor())
-            .totalCount(request.getEndDate().compareTo(request.getStartDate())+1)
+            .totalCount((int) (ChronoUnit.DAYS.between(request.getStartDate(), request.getEndDate()) + 1) )
             .users(Users.builder().id(userId).build())
             .build();
 
