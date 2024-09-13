@@ -39,9 +39,9 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-//                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html").permitAll()
-//                .anyRequest().authenticated());
-                .requestMatchers("/**").permitAll());
+                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html").permitAll()
+                .anyRequest().authenticated());
+//                .requestMatchers("/**").permitAll());
 
         http
             .logout(logout -> logout

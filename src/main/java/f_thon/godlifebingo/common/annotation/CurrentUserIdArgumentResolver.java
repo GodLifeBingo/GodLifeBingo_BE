@@ -19,12 +19,11 @@ public class CurrentUserIdArgumentResolver implements HandlerMethodArgumentResol
     @Override
     public Long resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication != null && authentication.getPrincipal() instanceof CustomOAuth2User oAuth2User) {
-//            return oAuth2User.getId();
-//        }
-//        throw new RuntimeException("ID를 가져오지 못했습니다.");
-        return 2L;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomOAuth2User oAuth2User) {
+            return oAuth2User.getId();
+        }
+        throw new RuntimeException("ID를 가져오지 못했습니다.");
     }
 }
 
