@@ -63,7 +63,7 @@ public class BingoService {
     public BingoGetResponse get(Long userId, Long bingoId) {
 
         Bingo bingo = bingoRepository.findById(bingoId).orElseThrow();
-        if(userId != bingo.getUsers().getId()){
+        if(!userId.equals(bingo.getUsers().getId())){
             System.out.println("userId: " + userId);
             System.out.println("bingo.getUsers().getId(): " + bingo.getUsers().getId());
             throw new RuntimeException();
