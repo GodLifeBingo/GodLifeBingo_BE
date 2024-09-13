@@ -20,51 +20,46 @@ public class CellService {
     private final BingoRepository bingoRepository;
 
     @Transactional
-    public void updateCell(Long cellId, Long userId) {
+    public Cell updateCell(Long cellId, Long userId) {
         Cell cell = checkCellOwnership(cellId, userId);
-        /*
-        금일 히스토리를 올린 적이 있는지
-         */
 
-        boolean exists = cellHistoryRepository.existsByCellAndCreatedAt(cell);
+        if (cell.isClicked()) {
+            Optional<CellHistory> optionalCellHistory = cellHistoryRepository.findByCellAndCreatedAt(
+                cell);
 
-        if (exists) {
-            log.error("금일 cell 업데이트를 했습니다. cell id : {}", cellId);
-            throw new RuntimeException();
+            optionalCellHistory.ifPresentOrElse((cellHistory) -> {
+                cellHistoryRepository.delete(cellHistory);
+                cell.rollbackProgress();
+                cell.setClicked(false);
+            }, () -> {
+                log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
+                throw new RuntimeException();
+            });
+        } else {
+            boolean exists = cellHistoryRepository.existsByCellAndCreatedAt(cell);
+
+            if (exists) {
+                log.error("금일 cell 업데이트를 했습니다. cell id : {}", cellId);
+                throw new RuntimeException();
+            }
+
+            if (cell.getGodlife().isOneOff() && cell.getCurrentProgress() == 1) {
+                log.error("이미 완료한 셀 입니다. cell id : {}", cellId);
+                throw new RuntimeException();
+            }
+
+            CellHistory cellHistory = CellHistory.builder().isClicked(true).cell(cell).build();
+            cellHistoryRepository.save(cellHistory);
+
+            cell.updateProgress();
+            cell.setClicked(true);
         }
 
-        CellHistory cellHistory = CellHistory.builder().isClicked(true).cell(cell).build();
-
-        cellHistoryRepository.save(cellHistory);
-
-        cell.updateProgress();
-        cell.setClicked(true);
-
-//        bingoRepository.updateTotalCompletedRate();
-    }
-
-
-    @Transactional
-    public void rollbackCell(Long cellId, Long userId) {
-        Cell cell = checkCellOwnership(cellId, userId);
-        Optional<CellHistory> optionalCellHistory = cellHistoryRepository.findByCellAndCreatedAt(
-            cell);
-
-        optionalCellHistory.ifPresentOrElse((cellHistory) -> {
-            cellHistoryRepository.delete(cellHistory);
-            cell.rollbackProgress();
-            cell.setClicked(false);
-//            bingoRepository.updateTotalCompletedRate();
-        }, () -> {
-            log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
-            throw new RuntimeException();
-        });
+        bingoRepository.updateTotalCompletedRate();
+        return cell;
     }
 
     private Cell checkCellOwnership(Long cellId, Long userId) {
-        /*
-        check ownership
-         */
         Optional<Cell> optionalCell = cellRepository.findById(cellId);
 
         Cell cell = optionalCell.orElseThrow(() -> {
