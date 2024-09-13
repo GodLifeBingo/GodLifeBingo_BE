@@ -40,7 +40,7 @@ public class CellService {
         cell.updateProgress();
         cell.setClicked(true);
 
-        bingoRepository.updateTotalCompletedRate();
+//        bingoRepository.updateTotalCompletedRate();
     }
 
 
@@ -54,7 +54,7 @@ public class CellService {
             cellHistoryRepository.delete(cellHistory);
             cell.rollbackProgress();
             cell.setClicked(false);
-            bingoRepository.updateTotalCompletedRate();
+//            bingoRepository.updateTotalCompletedRate();
         }, () -> {
             log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
             throw new RuntimeException();
