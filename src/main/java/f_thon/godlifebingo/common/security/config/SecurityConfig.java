@@ -45,7 +45,7 @@ public class SecurityConfig {
 
         http
             .logout(logout -> logout
-                .logoutSuccessUrl("/"));
+                .logoutSuccessUrl("https://god-life-bingo.vercel.app/login"));
 
         return http.build();
     }

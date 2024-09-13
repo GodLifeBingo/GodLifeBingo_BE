@@ -115,7 +115,7 @@ public class BingoService {
             throw new RuntimeException();
         });
 
-        if (bingo.getUsers().getId() != userId) {
+        if (!bingo.getUsers().getId().equals(userId)) {
             log.error("bingo 의 접근 권한이 없습니다. bingo id : {}, user id : {}", bingoId, userId);
             throw new RuntimeException();
         }
@@ -125,7 +125,7 @@ public class BingoService {
     @Transactional
     public void completeBingo(Long userId, Long bingoId) {
         Bingo bingo = bingoRepository.findById(bingoId).orElseThrow();
-        if(userId != bingo.getUsers().getId()){
+        if(!userId.equals(bingo.getUsers().getId())){
             throw new RuntimeException();
         }
 
