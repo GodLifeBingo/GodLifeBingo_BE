@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface CellRepository extends JpaRepository<Cell, Long> {
 
-    @EntityGraph(attributePaths = "bingo")
+    @EntityGraph(attributePaths = {"bingo", "godlife"})
     Optional<Cell> findById(Long cellId);
 
     @EntityGraph(attributePaths = "godlife")

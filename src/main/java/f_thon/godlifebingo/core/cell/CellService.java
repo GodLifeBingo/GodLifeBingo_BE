@@ -2,7 +2,9 @@ package f_thon.godlifebingo.core.cell;
 
 import f_thon.godlifebingo.core.CellHistory.CellHistory;
 import f_thon.godlifebingo.core.CellHistory.CellHistoryRepository;
+import f_thon.godlifebingo.core.bingo.Bingo;
 import f_thon.godlifebingo.core.bingo.BingoRepository;
+import f_thon.godlifebingo.core.godlife.GodLife;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,18 @@ public class CellService {
     @Transactional
     public Cell updateCell(Long cellId, Long userId) {
         Cell cell = checkCellOwnership(cellId, userId);
+        Bingo bingo = cell.getBingo();
+        GodLife godLife = cell.getGodlife();
+
+        if (bingo == null) {
+            log.error("셀과 연결된 빙고를 찾을 수 없습니다.", cellId);
+            throw new RuntimeException();
+        }
+
+        if (godLife == null) {
+            log.error("셀과 연결된 godlife를 찾을 수 없습니다..", cellId);
+            throw new RuntimeException();
+        }
 
         if (cell.isClicked()) {
             Optional<CellHistory> optionalCellHistory = cellHistoryRepository.findByCellAndCreatedAt(
@@ -29,7 +43,7 @@ public class CellService {
 
             optionalCellHistory.ifPresentOrElse((cellHistory) -> {
                 cellHistoryRepository.delete(cellHistory);
-                cell.rollbackProgress();
+                cell.rollbackProgress(bingo, godLife);
                 cell.setClicked(false);
             }, () -> {
                 log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
@@ -51,7 +65,7 @@ public class CellService {
             CellHistory cellHistory = CellHistory.builder().isClicked(true).cell(cell).build();
             cellHistoryRepository.save(cellHistory);
 
-            cell.updateProgress();
+            cell.updateProgress(bingo, godLife);
             cell.setClicked(true);
         }
 
