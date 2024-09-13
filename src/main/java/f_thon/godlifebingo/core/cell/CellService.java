@@ -2,6 +2,7 @@ package f_thon.godlifebingo.core.cell;
 
 import f_thon.godlifebingo.core.CellHistory.CellHistory;
 import f_thon.godlifebingo.core.CellHistory.CellHistoryRepository;
+import f_thon.godlifebingo.core.bingo.BingoRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ public class CellService {
 
     private final CellRepository cellRepository;
     private final CellHistoryRepository cellHistoryRepository;
+    private final BingoRepository bingoRepository;
 
     @Transactional
     public void updateCell(Long cellId, Long userId) {
@@ -37,6 +39,8 @@ public class CellService {
 
         cell.updateProgress();
         cell.setClicked(true);
+
+        bingoRepository.updateTotalCompletedRate();
     }
 
 
@@ -50,6 +54,7 @@ public class CellService {
             cellHistoryRepository.delete(cellHistory);
             cell.rollbackProgress();
             cell.setClicked(false);
+            bingoRepository.updateTotalCompletedRate();
         }, () -> {
             log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
             throw new RuntimeException();
