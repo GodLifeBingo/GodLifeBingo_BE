@@ -39,12 +39,14 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html").permitAll()
+                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html", "/api/users/session_check").permitAll()
                 .anyRequest().authenticated());
 //                .requestMatchers("/**").permitAll());
 
         http
             .logout(logout -> logout
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("https://god-life-bingo.vercel.app/login"));
 
         return http.build();
