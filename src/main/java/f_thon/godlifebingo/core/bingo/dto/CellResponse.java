@@ -16,6 +16,7 @@ public class CellResponse {
     private int row;
     private int col;
     private int currentProgress;
+    private boolean isClicked;
 
     public static CellResponse of(Cell cell){
         return CellResponse.builder()
@@ -23,6 +24,7 @@ public class CellResponse {
             .row(cell.getRowNum())
             .col(cell.getColNum())
             .currentProgress(cell.getCurrentProgress())
+            .isClicked(cell.isClicked())
             .godLife(GodLifeResponse.of(cell.getGodlife()))
             .build();
     }

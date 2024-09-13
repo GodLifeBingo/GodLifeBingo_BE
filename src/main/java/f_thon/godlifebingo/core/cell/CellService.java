@@ -36,6 +36,7 @@ public class CellService {
         cellHistoryRepository.save(cellHistory);
 
         cell.updateProgress();
+        cell.setClicked(true);
     }
 
 
@@ -48,6 +49,7 @@ public class CellService {
         optionalCellHistory.ifPresentOrElse((cellHistory) -> {
             cellHistoryRepository.delete(cellHistory);
             cell.rollbackProgress();
+            cell.setClicked(false);
         }, () -> {
             log.error("금일 갱신한 cell 정보가 없습니다. cell id : {}", cellId);
             throw new RuntimeException();

@@ -18,6 +18,7 @@ public class Cell extends BaseEntity {
     private int currentProgress;
     private int rowNum;
     private int colNum;
+    private boolean isClicked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bingo_id")
@@ -33,5 +34,8 @@ public class Cell extends BaseEntity {
 
     public void rollbackProgress() {
         this.currentProgress--;
+    }
+    public void setClicked(boolean isClicked){
+        this.isClicked = isClicked;
     }
 }
