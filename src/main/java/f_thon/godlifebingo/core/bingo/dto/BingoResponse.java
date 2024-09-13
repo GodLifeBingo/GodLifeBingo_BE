@@ -2,6 +2,7 @@ package f_thon.godlifebingo.core.bingo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import f_thon.godlifebingo.core.bingo.Bingo;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class BingoResponse {
     private String color;
     private String title;
     private int totalCount;
+    private BigDecimal totalCompletedRate;
 
     public static BingoResponse of(Bingo bingo){
         return BingoResponse.builder()
@@ -33,6 +35,7 @@ public class BingoResponse {
             .color(bingo.getColor())
             .title(bingo.getTitle())
             .totalCount(bingo.getTotalCount())
+            .totalCompletedRate(bingo.getTotalCompletedRate())
             .build();
     }
 }
