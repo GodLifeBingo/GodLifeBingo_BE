@@ -44,7 +44,8 @@ public class BingoController {
     }
 
     @PostMapping("/complete/{bingoId}")
-    public void completeBingo(@CurrentUserId Long userId, @PathVariable("bingoId") Long bingoId){
+    public String completeBingo(@CurrentUserId Long userId, @PathVariable("bingoId") Long bingoId){
         bingoService.completeBingo(userId, bingoId);
+        return "Mission is completed";
     }
 }

@@ -30,6 +30,7 @@ public class BingoCustomRepositoryImpl implements BingoCustomRepository{
             .limit(request.getLimit() == null ? 10 : request.getLimit())
             .offset((request.getOffset() == null ? 0 : request.getOffset() - 1)
                 * (request.getLimit() == null ? 10 : request.getLimit()))
+            .orderBy(bingo.id.desc())
             .fetch();
 
         Long count = jpaQueryFactory.select(bingo.count())
