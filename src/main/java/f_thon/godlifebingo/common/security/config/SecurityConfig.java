@@ -24,15 +24,6 @@ public class SecurityConfig {
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
 
-//    @Bean
-//    public CookieSerializer cookieSerializer() {
-//        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-//        serializer.setSameSite("None");
-//        serializer.setDomainName(".vercel.app");
-//        serializer.setUseSecureCookie(true);
-//        return serializer;
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
@@ -48,8 +39,9 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html").permitAll()
-                .anyRequest().authenticated());
+//                .requestMatchers("/", "/oauth2/**", "/login", "/api/godlifes", "/login.html").permitAll()
+//                .anyRequest().authenticated());
+                .requestMatchers("/**").permitAll());
 
         http
             .logout(logout -> logout
