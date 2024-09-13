@@ -42,4 +42,9 @@ public class BingoController {
     public BingoCellResponse getBingoCells(@PathVariable("bingo_id") Long bingoId, @CurrentUserId Long userId) {
         return bingoService.getBingoCells(bingoId, userId);
     }
+
+    @PostMapping("/complete/{bingoId}")
+    public void completeBingo(@CurrentUserId Long userId, @PathVariable("bingoId") Long bingoId){
+        bingoService.completeBingo(userId, bingoId);
+    }
 }

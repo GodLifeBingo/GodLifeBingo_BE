@@ -30,4 +30,8 @@ public class Bingo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users users;
+
+    public void completeBingo(){
+        this.isCompleted = false;
+    }
 }

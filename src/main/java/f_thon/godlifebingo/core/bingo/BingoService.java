@@ -120,4 +120,13 @@ public class BingoService {
         return bingo;
     }
 
+    @Transactional
+    public void completeBingo(Long userId, Long bingoId) {
+        Bingo bingo = bingoRepository.findById(bingoId).orElseThrow();
+        if(userId != bingo.getUsers().getId()){
+            throw new RuntimeException();
+        }
+
+        bingo.completeBingo();
+    }
 }
