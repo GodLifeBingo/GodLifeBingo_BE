@@ -34,7 +34,7 @@ public class SecurityConfig {
             .oauth2Login(oauth2 -> oauth2
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                     .userService(customOAuth2UserService))
-                .loginPage("/login.html")
+                .loginPage("https://god-life-bingo.vercel.app/login")
                 .successHandler(customOAuth2SuccessHandler));
 
         http
