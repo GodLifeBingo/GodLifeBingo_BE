@@ -21,6 +21,7 @@ public class BingoRow {
     private LocalDateTime endDate;
     private String title;
     private BigDecimal totalCompletedRate;
+    private boolean isCompleted;
 
     public static BingoRow of(Bingo bingo){
         return BingoRow.builder()
@@ -29,6 +30,7 @@ public class BingoRow {
             .endDate(bingo.getEndDate())
             .title(bingo.getTitle())
             .totalCompletedRate(bingo.getTotalCompletedRate())
+            .isCompleted(bingo.isCompleted())
             .build();
     }
 }

@@ -25,6 +25,7 @@ public class BingoResponse {
     private String title;
     private int totalCount;
     private BigDecimal totalCompletedRate;
+    private boolean isCompleted;
 
     public static BingoResponse of(Bingo bingo){
         return BingoResponse.builder()
@@ -36,6 +37,7 @@ public class BingoResponse {
             .title(bingo.getTitle())
             .totalCount(bingo.getTotalCount())
             .totalCompletedRate(bingo.getTotalCompletedRate())
+            .isCompleted(bingo.isCompleted())
             .build();
     }
 }

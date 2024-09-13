@@ -25,6 +25,7 @@ public class Bingo extends BaseEntity {
     private String color;
     private int totalCount;
     private BigDecimal totalCompletedRate;
+    private boolean isCompleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
