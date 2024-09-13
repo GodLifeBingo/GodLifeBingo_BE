@@ -128,7 +128,8 @@ public class BingoService {
         if(!userId.equals(bingo.getUsers().getId())){
             throw new RuntimeException();
         }
-
+        System.out.println("before complete: " + bingo.isCompleted());
         bingo.completeBingo();
+        System.out.println("after complete: " + bingo.isCompleted());
     }
 }
